@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 // 깃헙 테스트 합니다.
+// 깃헙 2번째 테스트 입니다.
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
