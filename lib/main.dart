@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-// 노트북에서 푸쉬합니다.
-// 노트북에서 두번째 테스트 입니다.
 
-// 깃헙 테스트 합니다.
-// 깃헙 2번째 테스트 입니다.
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -85,9 +81,7 @@ class _MyHomeState extends State<MyHome> {
       }
 
       while (selNums.contains(temp)) {
-        if (temp + 1 > 45) {
-          temp = 1;
-        }
+        temp = temp + 1;
       }
       selNums[i] = temp;
     }
@@ -100,11 +94,6 @@ class _MyHomeState extends State<MyHome> {
       'http://sstatic.naver.net/keypage/lifesrch/lotto/img/ball${selNums[tempValue].toString()}.gif',
       fit: BoxFit.fill,
     ));
-  }
-
-  _clearScreen() {
-    tempChar = '';
-    ascValue = '';
   }
 
   @override
@@ -138,8 +127,6 @@ class _MyHomeState extends State<MyHome> {
                     if (tempChar != '') {
                       // 입력받은 문자를 공식에 의해 임의숫자로 변환한다.
                       _calAscii();
-                    } else {
-                      _clearScreen();
                     }
                   });
                 },
