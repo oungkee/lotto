@@ -81,7 +81,11 @@ class _MyHomeState extends State<MyHome> {
       }
 
       while (selNums.contains(temp)) {
-        temp = temp + 1;
+        if (temp + 1 > 45) {
+          temp = 1;
+        } else {
+          temp = temp + 1;
+        }
       }
       selNums[i] = temp;
     }
