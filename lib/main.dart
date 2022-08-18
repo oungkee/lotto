@@ -100,7 +100,7 @@ class _MyHomeState extends State<MyHome> {
 
   _showImages(int tempValue) {
     if (tempChar == '') {
-      return Text('');
+      return const Text('');
     } else {
       return (Image.network(
         'http://sstatic.naver.net/keypage/lifesrch/lotto/img/ball${selNums[tempValue].toString()}.gif',
