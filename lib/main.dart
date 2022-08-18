@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'idonotautolotto',
+      debugShowCheckedModeBanner: false,
       home: MyHome(),
     );
   }
@@ -113,7 +114,7 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('I do not auto lotto'),
+        title: const Text('난 로또 자동으로 안해 ver 1.01'),
       ),
       body: Center(
         child: Padding(
