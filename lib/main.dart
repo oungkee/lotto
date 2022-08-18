@@ -50,6 +50,8 @@ class _MyHomeState extends State<MyHome> {
     ascValue = '';
     // ascii 코드의 합산을 저장할 double 변수.
     sumAscValue = 1;
+    tempChar = tempChar.replaceAll(' ', '');
+
     for (int i = 0; i < tempChar.length; i++) {
       // codeUnitAt(위치) 특정 문자의 위치를 유니코드로 반환.
       //[@2022-08-08] 가나다, 다나가, 다가나 의 순서와 상관없이 동일한 값이 표현됨. 수정이 필요함.
@@ -67,10 +69,13 @@ class _MyHomeState extends State<MyHome> {
         .replaceAll(' ', '')
         .replaceAll('0', ''));
 
+    // 리스트 초기화.
+    for (int i = 0; i < 6; i++) {
+      selNums[i] = 0;
+    }
+
     for (int i = 0; i < 6; i++) {
       int temp = int.parse(ascValue.substring((i * 2) + 0, (i * 2) + 2));
-
-      print(temp);
 
       if (temp > 45) {
         if (temp > 90) {
@@ -94,10 +99,14 @@ class _MyHomeState extends State<MyHome> {
   }
 
   _showImages(int tempValue) {
-    return (Image.network(
-      'http://sstatic.naver.net/keypage/lifesrch/lotto/img/ball${selNums[tempValue].toString()}.gif',
-      fit: BoxFit.fill,
-    ));
+    if (tempChar == '') {
+      return Text('');
+    } else {
+      return (Image.network(
+        'http://sstatic.naver.net/keypage/lifesrch/lotto/img/ball${selNums[tempValue].toString()}.gif',
+        fit: BoxFit.fill,
+      ));
+    }
   }
 
   @override
@@ -128,6 +137,8 @@ class _MyHomeState extends State<MyHome> {
                   super.setState(() {
                     // 공백은 삭제한다.
                     tempChar = _inputChar.text.replaceAll(' ', '');
+
+                    // 텍스트 입력 상자에 문자가 입력된 경우에만
                     if (tempChar != '') {
                       // 입력받은 문자를 공식에 의해 임의숫자로 변환한다.
                       _calAscii();
