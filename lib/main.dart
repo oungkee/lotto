@@ -149,26 +149,28 @@ class _MyHomeState extends State<MyHome> {
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                // 사용자 입력 문자를 그대로 표시.
-                tempChar,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
-                ascValue,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                  // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
-                  selNums.toString()),
-              const SizedBox(
-                height: 20,
-              ),
+              //************************상태 숨김**********************************
+              // Text(
+              //   // 사용자 입력 문자를 그대로 표시.
+              //   tempChar,
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Text(
+              //   // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
+              //   ascValue,
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Text(
+              //     // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
+              //     selNums.toString()),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              //************************상태 숨김**********************************
               Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
