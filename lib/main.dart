@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'informNum.dart';
-import 'makeNum.dart';
-import 'manageNum.dart';
+import 'informNum.dart'; // 당첨번호 및 등록번호 당첨 여부
+import 'manageNum.dart'; // 번호 관리
+import 'makeNum.dart'; // 번호 생성
 
 // 다시한번 커밋
 void main() => runApp(const MyApp());
