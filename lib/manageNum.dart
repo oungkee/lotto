@@ -21,7 +21,25 @@ class _manageNumState extends State<manageNum> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _bulidTop(),
+        child: Column(
+          children: [
+            _bulidTop(),
+            common_Sized_Heigh(),
+            const Text('관리번호 List'),
+            common_Sized_Heigh(),
+            _buildMiddle(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildMiddle() {
+    return Expanded(
+      //!!!!중요 Column 내부에 List View를 작성하는 경우 Expanded 위젯으로 감싸야 한다.
+      child: ListView(
+        // shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
+        children: [],
       ),
     );
   }
@@ -54,6 +72,17 @@ class _manageNumState extends State<manageNum> {
             common_Sized_Weight(),
           ],
         ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextFormField(
+            controller: _remarks,
+            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: '내용을 입력하세요.',
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -62,10 +91,11 @@ class _manageNumState extends State<manageNum> {
     return Flexible(
       child: TextFormField(
         decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText:
-                // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
-                '?'),
+          border: OutlineInputBorder(),
+          hintText:
+              // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
+              '?',
+        ),
         controller: number,
         keyboardType: TextInputType.number,
       ),
