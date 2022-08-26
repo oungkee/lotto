@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'common_Size.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class manageNum extends StatefulWidget {
   const manageNum({Key? key}) : super(key: key);
@@ -16,6 +17,28 @@ class _manageNumState extends State<manageNum> {
   final _num5 = TextEditingController();
   final _num6 = TextEditingController();
   final _remarks = TextEditingController();
+
+  int _counter = 0;
+
+  void _setData(int value) async {
+    //데이터를 저장하는 함수.
+    var key = 'count';
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setInt(key, value);
+  }
+
+  void _loadData() async {
+    var key = 'count';
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      var value = pref.getInt(key);
+      if (value == null) {
+        _counter = 0;
+      } else {
+        _counter = value;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
