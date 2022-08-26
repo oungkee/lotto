@@ -101,77 +101,81 @@ class _makeNumState extends State<makeNum> {
       appBar: AppBar(
         title: const Text('난 로또 자동으로 안해 ver 1.01'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const Text('문자를 입력하십시오'),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText:
-                        // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
-                        '아무 문자나 입력 하십시오. \n Please input the any characters.'),
-                controller: _inputChar,
-                keyboardType: TextInputType.text,
-                //텍스트 변경 시 아래의 메서드를 실행.
-                onChanged: (text) {
-                  super.setState(() {
-                    // 공백은 삭제한다.
-                    tempChar = _inputChar.text.replaceAll(' ', '');
-
-                    // 텍스트 입력 상자에 문자가 입력된 경우에만
-                    if (tempChar != '') {
-                      // 입력받은 문자를 공식에 의해 임의숫자로 변환한다.
-                      _calAscii();
-                    }
-                  });
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              //************************상태 숨김**********************************
-              // Text(
-              //   // 사용자 입력 문자를 그대로 표시.
-              //   tempChar,
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Text(
-              //   // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
-              //   ascValue,
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Text(
-              //     // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
-              //     selNums.toString()),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              //************************상태 숨김**********************************
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: ListView(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
                 children: [
-                  _showImages(0),
-                  _showImages(1),
-                  _showImages(2),
-                  _showImages(3),
-                  _showImages(4),
-                  _showImages(5),
+                  const Text('문자를 입력하십시오'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText:
+                            // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
+                            '아무 문자나 입력 하십시오. \n Please input the any characters.'),
+                    controller: _inputChar,
+                    keyboardType: TextInputType.text,
+                    //텍스트 변경 시 아래의 메서드를 실행.
+                    onChanged: (text) {
+                      super.setState(() {
+                        // 공백은 삭제한다.
+                        tempChar = _inputChar.text.replaceAll(' ', '');
+
+                        // 텍스트 입력 상자에 문자가 입력된 경우에만
+                        if (tempChar != '') {
+                          // 입력받은 문자를 공식에 의해 임의숫자로 변환한다.
+                          _calAscii();
+                        }
+                      });
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  //************************상태 숨김**********************************
+                  // Text(
+                  //   // 사용자 입력 문자를 그대로 표시.
+                  //   tempChar,
+                  // ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Text(
+                  //   // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
+                  //   ascValue,
+                  // ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Text(
+                  //     // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
+                  //     selNums.toString()),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  //************************상태 숨김**********************************
+                  Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _showImages(0),
+                      _showImages(1),
+                      _showImages(2),
+                      _showImages(3),
+                      _showImages(4),
+                      _showImages(5),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

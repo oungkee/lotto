@@ -15,10 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'i do not auto lotto',
-      // theme: ThemeData(
-      //     // primarySwatch: Colors.blue,
-      //     // primaryColor: Colors.white,
-      //     ),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: MyHome(),
       debugShowCheckedModeBanner: false,
     );

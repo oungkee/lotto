@@ -136,8 +136,8 @@ class test extends StatelessWidget {
       options: CarouselOptions(
         height: 250.0, // 높이 400
         autoPlay: true, //이미지 자동 전환.
+        autoPlayInterval: const Duration(seconds: 3),
       ),
-      // items: [1, 2, 3, 4, 5].map((i) {
       items: dummyItems.map((url) {
         return Builder(
           builder: (BuildContext context) {
@@ -145,9 +145,13 @@ class test extends StatelessWidget {
             return Container(
               width: MediaQuery.of(context).size.width, //기기의 가로 길이
               margin: const EdgeInsets.symmetric(horizontal: 5.0), //좌우 여백5
-              child: Image.network(
-                url,
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                // 둥근 사각형으로 자르는 위젯.
+                borderRadius: BorderRadius.circular(10.0), //테두리 라운드
+                child: Image.network(
+                  url,
+                  fit: BoxFit.cover, // 화면에 여백을 남기지 않음.
+                ),
               ),
             );
           },
@@ -157,6 +161,18 @@ class test extends StatelessWidget {
   }
 
   _buildBottom() {
-    return const Text('Bottom');
+    //하단에는 공지사항 같은 느끔으로 글 목록을 표시. ListView, ListTile
+    final items = List.generate(20, (i) {
+      return ListTile(
+        leading: Icon(Icons.notifications_none),
+        title: Text('$i 번째 공지사항 입니다.'),
+      );
+    });
+
+    return ListView(
+      physics: NeverScrollableScrollPhysics(), //이 리스트의 스크롤 작동 금지.
+      shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
+      children: items,
+    );
   }
 }
