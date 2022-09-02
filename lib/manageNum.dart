@@ -18,26 +18,43 @@ class _manageNumState extends State<manageNum> {
   final _num6 = TextEditingController();
   final _remarks = TextEditingController();
 
-  int _counter = 0;
+  // int _counter = 0;
+  String _saveData = '';
 
-  void _setData(int value) async {
+  void _setData(String value) async {
     //데이터를 저장하는 함수.
-    var key = 'count';
+    var key = 'data';
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setInt(key, value);
+    pref.setString(key, value);
   }
 
   void _loadData() async {
-    var key = 'count';
+    var key = 'data';
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
-      var value = pref.getInt(key);
+      var value = pref.getString(key);
       if (value == null) {
-        _counter = 0;
+        _saveData = '';
       } else {
-        _counter = value;
+        _saveData = value;
       }
     });
+  }
+
+  void _delData(String value) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // key 가 전달받은 인자 key 의 값 삭제
+    pref.remove(value);
+    _saveData = '';
+
+    // 모든 데이터 삭제
+    // pref.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
   }
 
   @override
@@ -46,7 +63,7 @@ class _manageNumState extends State<manageNum> {
       body: Center(
         child: Column(
           children: [
-            _bulidTop(),
+            _buildTop(),
             common_Sized_Heigh(),
             const Text('관리번호 List'),
             common_Sized_Heigh(),
@@ -62,17 +79,40 @@ class _manageNumState extends State<manageNum> {
       //!!!!중요 Column 내부에 List View를 작성하는 경우 Expanded 위젯으로 감싸야 한다.
       child: ListView(
         // shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
-        children: [],
+        children: [
+          Text('저장된 숫자는 $_saveData 입니다.'),
+        ],
       ),
     );
   }
 
-  _bulidTop() {
+  _buildTop() {
     return Column(
       children: [
         common_Sized_Heigh(),
         const Text('관리할 번호를 입력 하십시오.'),
-        common_Sized_Heigh(),
+        // common_Sized_Heigh(),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextFormField(
+            controller: _remarks,
+            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: '내용을 입력하세요.',
+            ),
+            //============================
+            onChanged: (text) {
+              super.setState(() {
+                // 공백은 삭제한다.
+                // _counter = _remarks.text;
+                _saveData = _remarks.text;
+                _setData(_saveData);
+              });
+            },
+            //============================
+          ),
+        ),
         Row(
           children: [
             common_Sized_Weight(),
@@ -89,22 +129,15 @@ class _manageNumState extends State<manageNum> {
             _initTextFormField(_num6),
             common_Sized_Weight(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _delData('data');
+                });
+              },
               child: Text('SAVE'),
             ),
             common_Sized_Weight(),
           ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: TextFormField(
-            controller: _remarks,
-            keyboardType: TextInputType.text,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: '내용을 입력하세요.',
-            ),
-          ),
         ),
       ],
     );
