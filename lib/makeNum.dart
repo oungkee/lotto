@@ -98,9 +98,9 @@ class _makeNumState extends State<makeNum> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('난 로또 자동으로 안해 ver 1.01'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('난 로또 자동으로 안해 ver 1.01'),
+      // ),
       body: ListView(
         children: [
           Center(
