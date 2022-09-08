@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'common_Size.dart';
+// 내부 저장소를 사용하기 위한 외부 패키지.
 import 'package:shared_preferences/shared_preferences.dart';
 
 class manageNum extends StatefulWidget {
@@ -18,21 +19,23 @@ class _manageNumState extends State<manageNum> {
   final _num6 = TextEditingController();
   final _remarks = TextEditingController();
 
-  // int _counter = 0;
+  // 내부 저장소에 저장할 변수.
   String _saveData = '';
 
   void _setData(String value) async {
-    //데이터를 저장하는 함수.
+    // 저장소에 저장될 key 값.
     var key = 'data';
+    // pref 변수에 인스턴스를 호출한다.
     SharedPreferences pref = await SharedPreferences.getInstance();
+    // 키, 값 으로 데이터를 저장한다.
     pref.setString(key, value);
   }
 
-  void _loadData() async {
-    var key = 'data';
+  void _loadData(String tempKey) async {
+    // var key = 'data';
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
-      var value = pref.getString(key);
+      var value = pref.getString(tempKey);
       if (value == null) {
         _saveData = '';
       } else {
@@ -44,7 +47,6 @@ class _manageNumState extends State<manageNum> {
   void _delData(String value) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     // key 가 전달받은 인자 key 의 값 삭제
-    pref.remove(value);
     _saveData = '';
 
     // 모든 데이터 삭제
@@ -54,7 +56,7 @@ class _manageNumState extends State<manageNum> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadData('data');
   }
 
   @override
@@ -70,18 +72,6 @@ class _manageNumState extends State<manageNum> {
             _buildMiddle(),
           ],
         ),
-      ),
-    );
-  }
-
-  _buildMiddle() {
-    return Expanded(
-      //!!!!중요 Column 내부에 List View를 작성하는 경우 Expanded 위젯으로 감싸야 한다.
-      child: ListView(
-        // shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
-        children: [
-          Text('저장된 숫자는 $_saveData 입니다.'),
-        ],
       ),
     );
   }
@@ -131,15 +121,41 @@ class _manageNumState extends State<manageNum> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _delData('data');
+                  // 입력되지 않은 정보가 있는지 검증한다
+                  _checkData;
+                  // _delData('data');
                 });
               },
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
             ),
             common_Sized_Weight(),
           ],
         ),
       ],
+    );
+  }
+
+  _checkData() {
+    // if (int.parse(_num1.toString()) > 0 && int.parse(_num1.toString()) < 47) {
+    if (int.parse(_num1.toString()) > 0) {
+      // print('overleng');
+      AlertDialog dialog = const AlertDialog(
+        content: Text('dsgag'),
+      );
+    } else {
+      //
+    }
+  }
+
+  _buildMiddle() {
+    return Expanded(
+      //!!!!중요 Column 내부에 List View를 작성하는 경우 Expanded 위젯으로 감싸야 한다.
+      child: ListView(
+        // shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
+        children: [
+          Text('저장된 숫자는 $_saveData 입니다.'),
+        ],
+      ),
     );
   }
 
@@ -154,6 +170,21 @@ class _manageNumState extends State<manageNum> {
         ),
         controller: number,
         keyboardType: TextInputType.number,
+        onChanged: (text) {
+          super.setState(() {
+            _checkData();
+          });
+        },
+        validator: (value) {
+          RegExp regExp = RegExp(r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$');
+          // RegExp(r'^[+]?([0-9]+([0-9]*)?|[0-9]+)$');
+          if (value!.trim().isEmpty) {
+            return "숫자를 입력 하세요.";
+          } else if (!regExp.hasMatch(value.trim())) {
+            return "숫자만 입력되어야 합니다.";
+          }
+          return null;
+        },
       ),
     );
   }
