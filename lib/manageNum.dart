@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; //정수만 입력 받기 위해 사용될 패키지.inputFormatters
 import 'common_Size.dart';
 // 내부 저장소를 사용하기 위한 외부 패키지.
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,14 +45,14 @@ class _manageNumState extends State<manageNum> {
     });
   }
 
-  void _delData(String value) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    // key 가 전달받은 인자 key 의 값 삭제
-    _saveData = '';
-
-    // 모든 데이터 삭제
-    // pref.clear();
-  }
+  // void _delData(String value) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   // key 가 전달받은 인자 key 의 값 삭제
+  //   _saveData = '';
+  //
+  //   // 모든 데이터 삭제
+  //   // pref.clear();
+  // }
 
   @override
   void initState() {
@@ -121,8 +122,8 @@ class _manageNumState extends State<manageNum> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  // 입력되지 않은 정보가 있는지 검증한다
-                  _checkData;
+                  // 동일한 숫자가 있는지 검증한다?
+                  // _checkSameNum
                   // _delData('data');
                 });
               },
@@ -133,18 +134,6 @@ class _manageNumState extends State<manageNum> {
         ),
       ],
     );
-  }
-
-  _checkData() {
-    // if (int.parse(_num1.toString()) > 0 && int.parse(_num1.toString()) < 47) {
-    if (int.parse(_num1.toString()) > 0) {
-      // print('overleng');
-      AlertDialog dialog = const AlertDialog(
-        content: Text('dsgag'),
-      );
-    } else {
-      //
-    }
   }
 
   _buildMiddle() {
@@ -170,9 +159,19 @@ class _manageNumState extends State<manageNum> {
         ),
         controller: number,
         keyboardType: TextInputType.number,
+        //숫자만 입력 받는다.
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
         onChanged: (text) {
           super.setState(() {
-            _checkData();
+            // 동일한 숫자가 입력되었는지 검증한다.
+            if (number == _num1) {
+              print('num1 에 입력했습니다.');
+            } else if (number == _num2) {
+              print('num2 에 입력했습니다.');
+            }
+
+            // print(number);
+            // _checkSameNum(number);
           });
         },
         validator: (value) {

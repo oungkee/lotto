@@ -17,7 +17,7 @@ common_Sized_Weight() {
 
 String checkNumber(String value) {
   // 숫자 검증.
-  RegExp regExp = RegExp(r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$');
+  RegExp regExp = RegExp(('[0-9]'));
   if (value.isEmpty) {
     return "숫자를 입력 하세요.";
   } else if (!regExp.hasMatch(value)) {
