@@ -163,15 +163,25 @@ class _manageNumState extends State<manageNum> {
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
         onChanged: (text) {
           super.setState(() {
+            if (int.parse(text.toString()) > 46) {
+              print('숫자가 초과 되었습니다.');
+              _num1.text = '';
+            }
+
             // 동일한 숫자가 입력되었는지 검증한다.
             if (number == _num1) {
               print('num1 에 입력했습니다.');
             } else if (number == _num2) {
               print('num2 에 입력했습니다.');
+            } else if (number == _num3) {
+              print('num3 에 입력했습니다.');
+            } else if (number == _num4) {
+              print('num4 에 입력했습니다.');
+            } else if (number == _num5) {
+              print('num5 에 입력했습니다.');
+            } else if (number == _num6) {
+              print('num6 에 입력했습니다.');
             }
-
-            // print(number);
-            // _checkSameNum(number);
           });
         },
         validator: (value) {
