@@ -4,6 +4,9 @@ import 'common_Size.dart';
 // 내부 저장소를 사용하기 위한 외부 패키지.
 import 'package:shared_preferences/shared_preferences.dart';
 
+// toast 및 로딩 사용을 위한 패키지. (Main에 Import 해도 실제 사용 폼에서도 import 해야 한다.)
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 class manageNum extends StatefulWidget {
   const manageNum({Key? key}) : super(key: key);
 
@@ -84,7 +87,7 @@ class _manageNumState extends State<manageNum> {
         const Text('관리할 번호를 입력 하십시오.'),
         // common_Sized_Heigh(),
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(10.0),
           child: TextFormField(
             controller: _remarks,
             keyboardType: TextInputType.text,
@@ -119,18 +122,19 @@ class _manageNumState extends State<manageNum> {
             common_Sized_Weight(),
             _initTextFormField(_num6),
             common_Sized_Weight(),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  // 동일한 숫자가 있는지 검증한다?
-                  // _checkSameNum
-                  // _delData('data');
-                });
-              },
-              child: const Text('SAVE'),
-            ),
-            common_Sized_Weight(),
           ],
+        ),
+        common_Sized_Heigh(),
+        ElevatedButton(
+          onPressed: () {
+            // EasyLoading.showToast('초과 됨');
+            setState(() {
+              // 동일한 숫자가 있는지 검증한다?
+              // _checkSameNum
+              // _delData('data');
+            });
+          },
+          child: const Text('SAVE'),
         ),
       ],
     );
@@ -157,42 +161,67 @@ class _manageNumState extends State<manageNum> {
               // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
               '?',
         ),
+        //힌트 및 입력 문자 가운데 정렬
+        textAlign: TextAlign.center,
         controller: number,
         keyboardType: TextInputType.number,
-        //숫자만 입력 받는다.
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+        style: TextStyle(
+          fontSize: 15,
+        ),
+        //숫자(0-9)만 입력 받는다.
+        // inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+        // 위와 같이 입력할 숫자를 강제적으로 정의하거나, 아래와 같이 숫자만 입력 하도록 할 수 있음.
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         onChanged: (text) {
           super.setState(() {
+            print('문자 입력');
             if (int.parse(text.toString()) > 46) {
-              print('숫자가 초과 되었습니다.');
-              _num1.text = '';
-            }
-
-            // 동일한 숫자가 입력되었는지 검증한다.
-            if (number == _num1) {
-              print('num1 에 입력했습니다.');
-            } else if (number == _num2) {
-              print('num2 에 입력했습니다.');
-            } else if (number == _num3) {
-              print('num3 에 입력했습니다.');
-            } else if (number == _num4) {
-              print('num4 에 입력했습니다.');
-            } else if (number == _num5) {
-              print('num5 에 입력했습니다.');
-            } else if (number == _num6) {
-              print('num6 에 입력했습니다.');
+              // toast 알림.
+              EasyLoading.showToast(
+                '입력 숫자가 46을 초과 할 수 없습니다!',
+                // Toast 창 가운데
+                toastPosition: EasyLoadingToastPosition.center,
+              );
+              // 입력상자 초기화.
+              number.text = '';
             }
           });
         },
         validator: (value) {
-          RegExp regExp = RegExp(r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$');
-          // RegExp(r'^[+]?([0-9]+([0-9]*)?|[0-9]+)$');
-          if (value!.trim().isEmpty) {
-            return "숫자를 입력 하세요.";
-          } else if (!regExp.hasMatch(value.trim())) {
-            return "숫자만 입력되어야 합니다.";
+// 동일한 숫자가 입력되었는지 검증한다.
+          print('동일한 숫자 검증시작');
+          if (number == _num1) {
+            if (value == _num2.text) {
+              print('2번 숫자와 동일합니다.');
+              EasyLoading.showToast('2번 입력 숫자와 동일합니다! 다른 숫자를 입력하십시오!');
+              _num1.text = '';
+            }
+          } else if (number == _num2) {
+            print('num2 에 입력했습니다.');
+          } else if (number == _num3) {
+            print('num3 에 입력했습니다.');
+          } else if (number == _num4) {
+            print('num4 에 입력했습니다.');
+          } else if (number == _num5) {
+            print('num5 에 입력했습니다.');
+          } else if (number == _num6) {
+            print('num6 에 입력했습니다.');
           }
           return null;
+
+          // if (int.parse(value!) > 46) {
+          //   print(value);
+          //   EasyLoading.showToast('숫자1가 초과되었습니다');
+          // }
+          // return null;
+          // RegExp regExp = RegExp(r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$');
+          // // RegExp(r'^[+]?([0-9]+([0-9]*)?|[0-9]+)$');
+          // if (value!.trim().isEmpty) {
+          //   return "숫자를 입력 하세요.";
+          // } else if (!regExp.hasMatch(value.trim())) {
+          //   return "숫자만 입력되어야 합니다.";
+          // }
+          // return null;
         },
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// 팝업 toast 를 사용하기 위한 패키지. (main 에서 최초 import 하여 사용해야 함)
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'informNum.dart'; // 당첨번호 및 등록번호 당첨 여부
 import 'manageNum.dart'; // 번호 관리
@@ -6,7 +8,28 @@ import 'makeNum.dart'; // 번호 생성
 import 'test.dart'; //테스트
 
 // 다시한번 커밋
-void main() => runApp(const MyApp());
+// void main() => runApp(const MyApp());
+
+void main() {
+  runApp(MyApp());
+  // configLoading();
+}
+
+// EasyLoding 의 설정 사전정의
+// void configLoading() {
+//   EasyLoading.instance
+//     ..displayDuration = const Duration(milliseconds: 2000)
+//     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+//     ..loadingStyle = EasyLoadingStyle.dark
+//     ..indicatorSize = 45.0
+//     ..radius = 10.0
+//     ..progressColor = Colors.yellow
+//     ..backgroundColor = Colors.green
+//     ..indicatorColor = Colors.yellow
+//     ..textColor = Colors.yellow
+//     ..maskColor = Colors.blue.withOpacity(0.5)
+//     ..userInteractions = true;
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,6 +41,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      //=== EasyLoding 패키지를 사용하기 위해서는 Material App에서 전처리를 해줘야 한다.=======
+      builder: (BuildContext context, Widget? child) {
+        return FlutterEasyLoading(
+            child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: child,
+        ));
+      },
+      //=== EasyLoding 패키지를 사용하기 위해서는 Material App에서 전처리를 해줘야 한다.=======
       home: MyHome(),
       debugShowCheckedModeBanner: false,
     );
@@ -40,6 +77,15 @@ class _MyHomeState extends State<MyHome> {
     const makeNum(),
     const test(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // 정상적으로 EasyLoading 패키지가 적용되었는지 확인.
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   EasyLoading.showSuccess('Use in initState');
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {

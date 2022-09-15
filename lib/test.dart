@@ -161,7 +161,7 @@ class test extends StatelessWidget {
   }
 
   _buildBottom() {
-    //하단에는 공지사항 같은 느끔으로 글 목록을 표시. ListView, ListTile
+    //하단에는 공지사항 같은 느낌으로 글 목록을 표시. ListView, ListTile
     final items = List.generate(20, (i) {
       return ListTile(
         leading: Icon(Icons.notifications_none),

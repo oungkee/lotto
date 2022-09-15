@@ -5,13 +5,13 @@ const double common_w_padding = 10.0;
 
 common_Sized_Heigh() {
   return const SizedBox(
-    height: 16.0,
+    height: 10.0,
   );
 }
 
 common_Sized_Weight() {
   return const SizedBox(
-    width: 16.0,
+    width: 10.0,
   );
 }
 

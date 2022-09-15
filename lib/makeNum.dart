@@ -105,12 +105,12 @@ class _makeNumState extends State<makeNum> {
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
                   const Text('문자를 입력하십시오'),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -135,7 +135,7 @@ class _makeNumState extends State<makeNum> {
                     },
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   //************************상태 숨김**********************************
                   // Text(
