@@ -7,29 +7,9 @@ import 'manageNum.dart'; // 번호 관리
 import 'makeNum.dart'; // 번호 생성
 import 'test.dart'; //테스트
 
-// 다시한번 커밋
-// void main() => runApp(const MyApp());
-
 void main() {
   runApp(MyApp());
-  // configLoading();
 }
-
-// EasyLoding 의 설정 사전정의
-// void configLoading() {
-//   EasyLoading.instance
-//     ..displayDuration = const Duration(milliseconds: 2000)
-//     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-//     ..loadingStyle = EasyLoadingStyle.dark
-//     ..indicatorSize = 45.0
-//     ..radius = 10.0
-//     ..progressColor = Colors.yellow
-//     ..backgroundColor = Colors.green
-//     ..indicatorColor = Colors.yellow
-//     ..textColor = Colors.yellow
-//     ..maskColor = Colors.blue.withOpacity(0.5)
-//     ..userInteractions = true;
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -73,7 +53,7 @@ class _MyHomeState extends State<MyHome> {
   final _pages = [
     // page 변수를 index 별 이동할 클래스를 설정한다. 0,1,2
     const informNum(),
-    const manageNum(),
+    manageNum(),
     const makeNum(),
     const test(),
   ];
