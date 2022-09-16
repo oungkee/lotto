@@ -42,18 +42,23 @@ class _manageNumState extends State<manageNum> {
   // 내부 저장소에 저장할 변수.
   String _saveData = '';
 
-  void _setData(String value) async {
+  // 내부 저장소에 등록된 Key값의 가짓수.
+  int _keyCount = 0;
+
+  void _setData(int keyCount, String value) async {
     // 저장소에 저장될 key 값.
-    var key = 'data';
+    var key = keyCount.toString();
     // pref 변수에 인스턴스를 호출한다.
     SharedPreferences pref = await SharedPreferences.getInstance();
     // 키, 값 으로 데이터를 저장한다.
     pref.setString(key, value);
+    print(pref.getKeys().length);
   }
 
   void _loadData(String tempKey) async {
     // var key = 'data';
     SharedPreferences pref = await SharedPreferences.getInstance();
+    _keyCount = pref.getKeys().length;
     setState(() {
       var value = pref.getString(tempKey);
       if (value == null) {
@@ -85,7 +90,7 @@ class _manageNumState extends State<manageNum> {
     _focus6 = FocusNode();
     _focusRemark = FocusNode();
 
-    _loadData('data');
+    _loadData('1');
   }
 
   @override
@@ -143,8 +148,8 @@ class _manageNumState extends State<manageNum> {
                 super.setState(() {
                   // 공백은 삭제한다.
                   // _counter = _remarks.text;
-                  _saveData = _remarks.text;
-                  _setData(_saveData);
+                  // _saveData = _remarks.text;
+                  // _setData(_saveData);
                 });
               },
               validator: (value) {
@@ -178,20 +183,37 @@ class _manageNumState extends State<manageNum> {
         ElevatedButton(
           onPressed: () {
             if (_formKeyRemark.currentState!.validate()) {
-              //오류 발생 시 포커스를 입력 상자로 이동한다.
-              print('정상');
+              if (_formKey1.currentState!.validate()) {
+                if (_formKey2.currentState!.validate()) {
+                  if (_formKey3.currentState!.validate()) {
+                    if (_formKey4.currentState!.validate()) {
+                      if (_formKey5.currentState!.validate()) {
+                        if (_formKey6.currentState!.validate()) {
+                        } else {
+                          FocusScope.of(context).requestFocus(_focus6);
+                        }
+                      } else {
+                        FocusScope.of(context).requestFocus(_focus5);
+                      }
+                    } else {
+                      FocusScope.of(context).requestFocus(_focus4);
+                    }
+                  } else {
+                    FocusScope.of(context).requestFocus(_focus3);
+                  }
+                } else {
+                  FocusScope.of(context).requestFocus(_focus2);
+                }
+              } else {
+                FocusScope.of(context).requestFocus(_focus1);
+              }
             } else {
-              print('오류');
+              //오류 발생 시 포커스를 입력 상자로 이동한다.
               FocusScope.of(context).requestFocus(_focusRemark);
             }
-
-            if (_formKey1.currentState!.validate()) {
-            } else {
-              FocusScope.of(context).requestFocus(_focus1);
-            }
-            if (_formKey2.currentState!.validate()) {}
             // EasyLoading.showToast('초과 됨');
             setState(() {
+              _save_Data();
               // 동일한 숫자가 있는지 검증한다?
               // _checkSameNum
               // _delData('data');
@@ -250,6 +272,8 @@ class _manageNumState extends State<manageNum> {
                   // Toast 창 가운데
                   toastPosition: EasyLoadingToastPosition.center,
                 );
+                // 재입력을 위해 초과된 필드에 포커스를 이동한다.
+                FocusScope.of(context).requestFocus(tempFocus);
                 // 입력상자 초기화.
                 number.text = '';
               }
@@ -257,7 +281,10 @@ class _manageNumState extends State<manageNum> {
           },
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return '';
+              // 반환할 오류
+              return '누락';
+            } else {
+              // 중요! 추후 동일한 숫자가 입력되었는지 검증하는 모듈 추가 할것!!
             }
             return null;
           },
@@ -265,4 +292,18 @@ class _manageNumState extends State<manageNum> {
       ),
     );
   }
+
+  _save_Data() {
+    // 등록된 데이터를 저장한다.32
+    _saveData = _remarks.text;
+    _keyCount = _keyCount + 1;
+    _setData(_keyCount, _saveData);
+  }
+
+  // _show_Data() {
+  //   // for (int i = 0, i < _keyCount ,i++) {
+  //   //
+  //   // }
+  //   // 저장된 데이터를 불러온다.
+  // }
 }

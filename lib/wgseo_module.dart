@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const double common_h_padding = 16.0;
+const double common_h_padding = 10.0;
 const double common_w_padding = 10.0;
 
 wgseo_Sized_Heigh() {
