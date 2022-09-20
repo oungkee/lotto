@@ -4,6 +4,9 @@ import 'wgseo_module.dart';
 // 내부 저장소를 사용하기 위한 외부 패키지.
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Shared Preferences 내부 저장소에 map 형식 데이터를 저장하기 위해 사용하는 패키지.
+// import 'dart:convert';
+
 // toast 및 로딩 사용을 위한 패키지. (Main에 Import 해도 실제 사용 폼에서도 import 해야 한다.)
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -300,10 +303,5 @@ class _manageNumState extends State<manageNum> {
     _setData(_keyCount, _saveData);
   }
 
-  // _show_Data() {
-  //   // for (int i = 0, i < _keyCount ,i++) {
-  //   //
-  //   // }
-  //   // 저장된 데이터를 불러온다.
-  // }
+  // _show_Data() {}
 }
