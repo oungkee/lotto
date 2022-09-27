@@ -18,6 +18,7 @@ class manageNum extends StatefulWidget {
   State<manageNum> createState() => _manageNumState();
 }
 
+// 테스트 입니다.
 class _manageNumState extends State<manageNum> {
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
