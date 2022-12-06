@@ -42,16 +42,26 @@ class _makeNumState extends State<makeNum> {
       // codeUnitAt(위치) 특정 문자의 위치를 유니코드로 반환.
       //[@2022-08-08] 가나다, 다나가, 다가나 의 순서와 상관없이 동일한 값이 표현됨. 수정이 필요함.
       sumAscValue = (sumAscValue *
+              //문자의 순서와 동일한 값이 표현되므로 자릿수에 따른 변수를 추가로 곱한다.
               tempChar.codeUnitAt(i) *
               // 원주율
               3.14159265358979) /
           // 임의숫자
           1228;
+      //[@2022-12-07]
+      if (i % 2 == 0) {
+        // 곱하기만 하는 경우 문자의 순서와 상관없이 동일한 결과 값이 나오므로 홀수,짝수에 따라 변수를 적용하여 순서에 따라 결과가 다르게 계산한다.
+        sumAscValue = sumAscValue + 1228;
+      } else {
+        sumAscValue = sumAscValue - 1228;
+      }
     }
 
+    // 임의 계산된 숫자에서 랜덤 숫자를 생성할때 불필요한 문자는 제거한다.
     ascValue = ((sumAscValue.toString().replaceAll('.', ''))
         .replaceAll('e', '')
         .replaceAll('+', '')
+        .replaceAll('-', '')
         .replaceAll(' ', '')
         .replaceAll('0', ''));
 
@@ -61,23 +71,31 @@ class _makeNumState extends State<makeNum> {
     }
 
     for (int i = 0; i < 6; i++) {
+      //두 문자씩 끊어 리스트에 저장.
       int temp = int.parse(ascValue.substring((i * 2) + 0, (i * 2) + 2));
 
       if (temp > 45) {
         if (temp > 90) {
+          // 45를 초과 90 초과 하는 경우 -90
           temp = temp - 90;
         } else {
+          // 45를 초과 90 미만의 경우 - 14
           temp = temp - 45;
         }
       }
 
+      // 위에 생성된 숫자가 리스트 변수에 존재하는 경우 무한 반복하여 중복되는 값이 없도록 변수에 +1을 더한다.
       while (selNums.contains(temp)) {
+        // +1 한 값이 45를 초과 하는 경우
         if (temp + 1 > 45) {
+          // 변수 초기화
           temp = 1;
         } else {
+          // 변수 + 1
           temp = temp + 1;
         }
       }
+      // 리스트변수에 중복된 값이 없으면 값 등록.
       selNums[i] = temp;
     }
     //리스트를 오름 차순으로 정렬한다.
@@ -85,6 +103,7 @@ class _makeNumState extends State<makeNum> {
   }
 
   _showImages(int tempValue) {
+    // 값을 기준으로 네이버 이미지를 불러온다.
     if (tempChar == '') {
       return const Text('');
     } else {
