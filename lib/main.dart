@@ -5,7 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'informNum.dart'; // 당첨번호 및 등록번호 당첨 여부
 import 'manageNum.dart'; // 번호 관리
 import 'makeNum.dart'; // 번호 생성
-import 'test.dart'; //테스트
+// import 'test.dart'; //테스트
+import 'history.dart'; //이력
+import 'rank.dart'; //랭크
 
 void main() {
   runApp(MyApp());
@@ -55,7 +57,8 @@ class _MyHomeState extends State<MyHome> {
     const informNum(),
     manageNum(),
     const makeNum(),
-    const test(),
+    const history(),
+    const rank(),
   ];
 
   @override
@@ -113,8 +116,12 @@ class _MyHomeState extends State<MyHome> {
               icon: Icon(Icons.circle),
             ),
             BottomNavigationBarItem(
-              label: '테스트',
-              icon: Icon(Icons.recycling),
+              label: '이력',
+              icon: Icon(Icons.list),
+            ),
+            BottomNavigationBarItem(
+              label: '랭킹',
+              icon: Icon(Icons.cyclone),
             ),
           ]),
     );
