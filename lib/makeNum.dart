@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'wgseo_module.dart';
 
 class makeNum extends StatefulWidget {
   const makeNum({Key? key}) : super(key: key);
@@ -156,30 +157,8 @@ class _makeNumState extends State<makeNum> {
                   const SizedBox(
                     height: 10,
                   ),
-                  //************************상태 숨김**********************************
-                  // Text(
-                  //   // 사용자 입력 문자를 그대로 표시.
-                  //   tempChar,
-                  // ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text(
-                  //   // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
-                  //   ascValue,
-                  // ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Text(
-                  //     // 입력된 문자를 유니코드로 변환하여 숫자를 합산한 후 문자로 반환.
-                  //     selNums.toString()),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  //************************상태 숨김**********************************
+                  wgseo_Sized_Heigh(),
                   Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _showImages(0),
@@ -189,7 +168,13 @@ class _makeNumState extends State<makeNum> {
                       _showImages(4),
                       _showImages(5),
                     ],
-                  )
+                  ),
+                  wgseo_Sized_Heigh(),
+                  //저장버튼 (이후 로컬에 데이터 저장할 수 있도록 추가 할것)
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text("저장"),
+                  ),
                 ],
               ),
             ),

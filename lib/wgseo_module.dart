@@ -5,13 +5,13 @@ const double common_w_padding = 10.0;
 
 wgseo_Sized_Heigh() {
   return const SizedBox(
-    height: 10.0,
+    height: common_h_padding,
   );
 }
 
 wgseo_Sized_Width() {
   return const SizedBox(
-    width: 10.0,
+    width: common_w_padding,
   );
 }
 
