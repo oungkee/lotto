@@ -52,14 +52,14 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   var _index = 0; // 페이지 인덱스 0,1,2
-  final _pages = [
-    // page 변수를 index 별 이동할 클래스를 설정한다. 0,1,2
-    const informNum(),
-    manageNum(),
-    const makeNum(),
-    const history(),
-    const rank(),
-  ];
+  // final _pages = [
+  //   // page 변수를 index 별 이동할 클래스를 설정한다. 0,1,2
+  //   const informNum(),
+  //   manageNum(),
+  //   makeNum(),
+  //   const history(),
+  //   const rank(),
+  // ];
 
   @override
   void initState() {
@@ -92,7 +92,16 @@ class _MyHomeState extends State<MyHome> {
         ],
         centerTitle: true, // 앱바 타이블을 가운데 정렬
       ),
-      body: _pages[_index],
+      //[@2022-12-08] 중요!!'
+      // 탭바 화면 전환 시 이전 화면이 초기화 되는 것을 방지하기 위해 IndexedStack 을 사용한다.
+      body: IndexedStack(index: _index, children: const [
+        // 각 탭의 화면을 지정해 준다.
+        informNum(),
+        manageNum(),
+        makeNum(),
+        history(),
+        rank()
+      ]),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed, // 중요!! item이 4개 이상일 경우 추가
           onTap: (index) {
