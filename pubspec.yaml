@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.0.15   #내부 저장소 관리를 위한 라이브러리
   flutter_easyloading: ^3.0.5        #toast 및 로딩 이미지를 사용하기 위한 라이브러리
   http: ^0.13.5         #로또 번호를 파싱하기위한 라이브러리.
+  html: ^0.15.1         #웹 페이지 크롤링을 위한 라이브러리
 
 dev_dependencies:
   flutter_test:
