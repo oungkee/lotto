@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'i do not auto lotto',
+      title: 'I do not auto lotto',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -76,7 +76,7 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         // backgroundColor: Colors.white, //앱바 색상 흰색.
         title: const Text(
-          'i do not auto',
+          'I do not auto',
           style: TextStyle(
               // color: Colors.black,
               fontWeight: FontWeight.bold), // 글자는 검정색

@@ -1,10 +1,13 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; //http 패키지 추가.
-import 'package:html/dom.dart' as dom; //웹 크롤링을 위한 dom 패키지 추가.
-import 'package:html/parser.dart' as parse; //웹 크롤링을 위한 parse 패키지 추가.
+// import 'package:html/dom.dart' as dom; //웹 크롤링을 위한 dom 패키지 추가.
+// import 'package:html/parser.dart' as parse; //웹 크롤링을 위한 parse 패키지 추가.
 import 'dart:convert'; // json을 수동으로 직렬화 시키기 위해 convert 패키지 추가.
 import 'dart:async';
 import 'wgseo_module.dart';
+import 'cp949_uni_conversion.dart';
 
 class informNum extends StatefulWidget {
   const informNum({Key? key}) : super(key: key);
@@ -14,6 +17,8 @@ class informNum extends StatefulWidget {
 }
 
 class _informNumState extends State<informNum> {
+  var nowGameNo = '';
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,10 +29,26 @@ class _informNumState extends State<informNum> {
           'Lotto Result numbers',
           style: TextStyle(fontSize: 20),
         ),
+
+        wgseo_Sized_Heigh(),
+
+        FutureBuilder(
+            future: fetchNowGameNo(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData == false) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                nowGameNo = snapshot.data.toString();
+                return Text('최종 추첨 회차는 ${snapshot.data.toString()}회 입니다.');
+              }
+            }),
+
         wgseo_Sized_Heigh(),
         // FutureBuilder 예시 코드
         FutureBuilder(
-            future: fetchPost(),
+            future: fetchPost(nowGameNo),
             builder: (context, snapshot) {
               // 해당 부분은 data를 아직 받아 오지 못했을 때 실행되는 부분
               if (snapshot.hasData == false) {
@@ -44,29 +65,17 @@ class _informNumState extends State<informNum> {
                 return Text(snapshot.data.toString());
               }
             }),
-        wgseo_Sized_Heigh(),
-        FutureBuilder(
-            future: fetchNowSeq(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData == false) {
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return Text(snapshot.data.toString());
-              }
-            }),
       ],
     ));
   }
 }
 
 // 비동기를 통해 네트워크 요청
-Future fetchPost() async {
-  await Future.delayed(
-      const Duration(milliseconds: 5)); // 비동기 과정을 보여주기 위해 시간을 딜레이 시킨다.
+Future fetchPost(String tempNo) async {
+  // await Future.delayed(
+  //     const Duration(milliseconds: 5)); // 비동기 과정을 보여주기 위해 시간을 딜레이 시킨다.
 
-  int page = 994;
+  String page = tempNo;
   String lottoUrl =
       'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=$page'; // 동행복권 Lotto api url
 
@@ -88,58 +97,27 @@ Future fetchPost() async {
     LottoNums.add(nums['drwtNo6']); // 번호6
     LottoNums.add(nums['bnusNo']); // 보너스 번호
 
-    return LottoNums;
+    return '추첨 회차는 ${nums['drwNo']} 이며,  \n\n'
+        '당첨 번호는 ${nums['drwtNo1']},${nums['drwtNo2']},${nums['drwtNo3']},${nums['drwtNo4']},${nums['drwtNo5']},${nums['drwtNo6']} + 보너스 번호 ${nums['bnusNo']}입니다.';
+
+    // return LottoNums;
   } else {
     return "Error";
   }
 }
 
-// 비동기를 통해 네트워크 요청
-Future fetchNowSeq() async {
-  var weather = <String>[];
-  var currentTemp = '';
-
-  /*#############################################################################
-  final response = await http.get(Uri.parse(
-      'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=군포시+날씨'));
-
-  dom.Document document = parse.parse(response.body);
-
-  final temp = document.getElementsByClassName('temperature_text');
-
-  print('temp= $temp');
-
-  weather = temp
-      .map((element) => element.getElementsByTagName('strong')[0].innerHtml)
-      .toList();
-
-  print('weather = $weather');
-
-  currentTemp = weather[1].replaceAll(RegExp('[^-0-9,.]'), '');
-
-  print('currentTemp = $currentTemp');
-  */
-
+Future fetchNowGameNo() async {
   final response = await http
-      .get(Uri.parse('https://dhlottery.co.kr/common.do?method=main'));
+      .get(Uri.parse('https://dhlottery.co.kr/gameResult.do?method=byWin'));
 
-  dom.Document document = parse.parse(response.body);
+  var tempStr = cp949toUni(response.body.codeUnits);
 
-  print('body = $document');
+  var resultNo = tempStr.substring(
+      tempStr.indexOf(
+            'content="동행복권 ',
+          ) +
+          14,
+      tempStr.indexOf('회 당첨번호'));
 
-  final temp = document.getElementsByClassName('content');
-
-  print('temp= $temp');
-
-  weather = temp
-      .map((element) => element.getElementsByTagName('lottoDrwNo')[0].innerHtml)
-      .toList();
-
-  print('weather = ${weather.toString()}');
-
-  currentTemp = weather[1].replaceAll(RegExp('[^-0-9,.]'), '');
-
-  print('currentTemp = $currentTemp');
-
-  return currentTemp;
+  return resultNo;
 }

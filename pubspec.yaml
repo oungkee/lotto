@@ -30,7 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -40,7 +39,7 @@ dependencies:
   http: ^0.13.5         #로또 번호를 파싱하기위한 라이브러리.
   html: ^0.15.1         #웹 페이지 크롤링을 위한 라이브러리
 
-dev_dependencies:u
+dev_dependencies:
   flutter_test:
     sdk: flutter
 
