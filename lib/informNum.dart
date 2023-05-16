@@ -1,5 +1,4 @@
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; //http 패키지 추가.
 // import 'package:html/dom.dart' as dom; //웹 크롤링을 위한 dom 패키지 추가.
@@ -18,6 +17,12 @@ class informNum extends StatefulWidget {
 
 class _informNumState extends State<informNum> {
   var nowGameNo = '';
+  var data = {};
+  @override
+  void initState() {
+    super.initState();
+    // data = ;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +34,14 @@ class _informNumState extends State<informNum> {
           'Lotto Result numbers',
           style: TextStyle(fontSize: 20),
         ),
+
+        Text('현재 추첨 회차는 ${data['drwNoDate'].toString()} 회 입니다'),
+
+        ElevatedButton(
+            onPressed: () {
+              getJSONData(nowGameNo);
+            },
+            child: Text('ddd')),
 
         wgseo_Sized_Heigh(),
 
@@ -68,12 +81,61 @@ class _informNumState extends State<informNum> {
       ],
     ));
   }
+
+  Future<String> fetchNowGameNo() async {
+    //현재의 추첨회차를 읽어온다.
+    // await Future.delayed(
+    //     const Duration(milliseconds: 2)); // 비동기 과정을 보여주기 위해 시간을 딜레이 시킨다.
+
+    final response = await http
+        .get(Uri.parse('https://dhlottery.co.kr/gameResult.do?method=byWin'));
+
+    var tempStr = cp949toUni(response.body.codeUnits);
+
+    var resultNo = tempStr.substring(
+        tempStr.indexOf(
+              'content="동행복권 ',
+            ) +
+            14,
+        tempStr.indexOf('회 당첨번호'));
+
+    return resultNo;
+  }
+
+  Future<void> getJSONData(String tempNo) async {
+    final response = await http.get(Uri.parse(
+        'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=$tempNo'));
+    if (response.statusCode == 200) {
+      setState(() {
+        var dataConvertedToJSON = json.decode(response.body);
+        // data List 초기화.
+        data = {};
+        // List 변수에 해당 당첨번호를 입력한다.
+        data['drwNoDate'] = dataConvertedToJSON['drwNoDate'];
+        data['drwNo'] = dataConvertedToJSON['drwNo'];
+        data['drwtNo1'] = dataConvertedToJSON['drwtNo1'];
+        data['drwtNo2'] = dataConvertedToJSON['drwtNo2'];
+        data['drwtNo3'] = dataConvertedToJSON['drwtNo3'];
+        data['drwtNo4'] = dataConvertedToJSON['drwtNo4'];
+        data['drwtNo5'] = dataConvertedToJSON['drwtNo5'];
+        data['drwtNo6'] = dataConvertedToJSON['drwtNo6'];
+        data['bnusNo'] = dataConvertedToJSON['bnusNo'];
+        data['totSellamnt'] = dataConvertedToJSON['totSellamnt'];
+        data['firstWinamnt'] = dataConvertedToJSON['firstWinamnt'];
+        data['firstPrzwnerCo'] = dataConvertedToJSON['firstPrzwnerCo'];
+        data['firstAccumamnt'] = dataConvertedToJSON['firstAccumamnt'];
+      });
+    } else {
+      throw Exception('API 요청실패');
+    }
+  }
 }
 
 // 비동기를 통해 네트워크 요청
 Future fetchPost(String tempNo) async {
+  // 지정된 회차의 당첨 정보를 읽어온다.
   // await Future.delayed(
-  //     const Duration(milliseconds: 5)); // 비동기 과정을 보여주기 위해 시간을 딜레이 시킨다.
+  //     const Duration(milliseconds: 4)); // 비동기 과정을 보여주기 위해 시간을 딜레이 시킨다.
 
   String page = tempNo;
   String lottoUrl =
@@ -104,20 +166,4 @@ Future fetchPost(String tempNo) async {
   } else {
     return "Error";
   }
-}
-
-Future fetchNowGameNo() async {
-  final response = await http
-      .get(Uri.parse('https://dhlottery.co.kr/gameResult.do?method=byWin'));
-
-  var tempStr = cp949toUni(response.body.codeUnits);
-
-  var resultNo = tempStr.substring(
-      tempStr.indexOf(
-            'content="동행복권 ',
-          ) +
-          14,
-      tempStr.indexOf('회 당첨번호'));
-
-  return resultNo;
 }
