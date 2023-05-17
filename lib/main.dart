@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // 팝업 toast 를 사용하기 위한 패키지. (main 에서 최초 import 하여 사용해야 함)
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'intro.dart'; // 인트로 화면 표시를 위해.
 import 'informNum.dart'; // 당첨번호 및 등록번호 당첨 여부
 import 'manageNum.dart'; // 번호 관리
 import 'makeNum.dart'; // 번호 생성
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ));
       },
       //=== EasyLoding 패키지를 사용하기 위해서는 Material App에서 전처리를 해줘야 한다.=======
-      home: MyHome(),
+      home: IntroPage(),
       debugShowCheckedModeBanner: false,
     );
   }

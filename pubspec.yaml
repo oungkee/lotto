@@ -38,6 +38,8 @@ dependencies:
   flutter_easyloading: ^3.0.5        #toast 및 로딩 이미지를 사용하기 위한 라이브러리
   http: ^0.13.5         #로또 번호를 파싱하기위한 라이브러리.
   html: ^0.15.1         #웹 페이지 크롤링을 위한 라이브러리
+  intl: ^0.18.1         #숫자 포맷 (##,##) 을 사용하기 위한 라이브러리.
+  lottie: ^2.3.2        #애니메이션 인트로를 위한 라이브러리.
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +64,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/   #lotti 애니메이션을 위해 에셋추가.
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
