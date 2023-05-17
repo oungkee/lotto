@@ -44,6 +44,7 @@ class _IntroPage extends State<IntroPage> {
               // height: 300,
               // width: 300,
               //사이즈 박스에 Lottie 애니메이션 삽입
+              // child: Lottie.asset('assets/96916-searching.zip'),
               child: Lottie.asset('assets/animation.json'),
             )
           ],

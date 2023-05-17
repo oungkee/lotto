@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 const double common_h_padding = 10.0;
 const double common_w_padding = 10.0;
@@ -36,4 +37,15 @@ String validateString(String value) {
     return "문자만 입력되어야 합니다.";
   }
   return "검증됨 문자 입니다.";
+}
+
+showFormatNum(String tempStr) {
+  //전달받은 형식이 숫자가 아닌 경우 공백을 표시한다.
+  if (int.tryParse(tempStr) == null) {
+    return tempStr;
+  } else {
+    return NumberFormat('###,###')
+        .format(int.parse(tempStr))
+        .replaceAll(' ', '');
+  }
 }

@@ -5,7 +5,6 @@ import 'dart:convert'; // json을 수동으로 직렬화 시키기 위해 conver
 import 'dart:async'; //timer 를 사용하기 위함 package
 import 'wgseo_module.dart';
 import 'cp949_uni_conversion.dart';
-import 'package:intl/intl.dart';
 
 class informNum extends StatefulWidget {
   const informNum({Key? key}) : super(key: key);
@@ -34,8 +33,7 @@ class _informNumState extends State<informNum> {
           style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
         ),
         wgseo_Sized_Heigh(),
-
-        Text('현재 추첨 회차는 ${data['drwNo'].toString()} 회 입니다'),
+        Text('현재 추첨 회차는 ${showFormatNum(data['drwNo'].toString())} 회 입니다'),
         wgseo_Sized_Heigh(),
         wgseo_Sized_Heigh(),
         Text('당첨번호는 ${data['drwtNo1'].toString()}, '
@@ -45,29 +43,21 @@ class _informNumState extends State<informNum> {
             '${data['drwtNo5'].toString()}, '
             '${data['drwtNo6'].toString()} + '
             '${data['bnusNo'].toString()}(보너스) 입니다.'),
-
-        wgseo_Sized_Heigh(),
-
-        Text(
-            '금주 총 판매금액 ${NumberFormat('###,###').format(int.parse(data['totSellamnt'].toString())).replaceAll(' ', '')} 원 입니다.'),
-        // Text(
         wgseo_Sized_Heigh(),
         Text(
-            '금주 1등 총 담첨금액은 ${NumberFormat('###,###').format(int.parse(data['firstAccumamnt'].toString())).replaceAll(' ', '')} 원 입니다'),
+            '금주 총 판매금액 ${showFormatNum(data['totSellamnt'].toString())} 원 입니다.'),
         wgseo_Sized_Heigh(),
         Text(
-            '1등 당첨 게임수 는 ${NumberFormat('###,###').format(int.parse(data['firstPrzwnerCo'].toString())).replaceAll(' ', '')} 게임 입니다.'),
+            '금주 1등 총 담첨금액은 ${showFormatNum(data['firstAccumamnt'].toString())} 원 입니다'),
         wgseo_Sized_Heigh(),
         Text(
-            '1게임당 당첨금액은 ${NumberFormat('###,###').format(int.parse(data['firstWinamnt'].toString())).replaceAll(' ', '')} 원 입니다'),
+            '1등 당첨 게임수 는 ${showFormatNum(data['firstPrzwnerCo'].toString())} 게임 입니다.'),
+        wgseo_Sized_Heigh(),
+        Text(
+            '1게임당 당첨금액은 ${showFormatNum(data['firstWinamnt'].toString())} 원 입니다'),
       ],
     ));
   }
-
-  // writeNumericNumber(String tempStr) {
-  //   //전달받은 형식이 숫자가 아닌 경우 공백을 표시한다.
-  //   // if ())
-  // }
 
   Future<void> fetchNowGameNo() async {
     //현재의 추첨회차를 읽어온다.
