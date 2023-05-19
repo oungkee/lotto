@@ -17,7 +17,9 @@ class _IntroPage extends State<IntroPage> {
 
   Future<Timer> loadData() async {
     // 5초 지연 후 onDoneLoading 으로 페이지 이동한다.
-    return Timer(Duration(seconds: 3), onDoneLoading);
+    // return Timer(Duration(seconds: 3), onDoneLoading);
+    //테스트 기간에는 1초로 한다.
+    return Timer(Duration(milliseconds: 1), onDoneLoading);
   }
 
   // 지연이 완료 된 후

@@ -8,8 +8,9 @@ import 'makeNum.dart'; // 번호 생성
 // import 'test.dart'; //테스트
 import 'history.dart'; //이력
 import 'rank.dart'; //랭크
+import 'package:hive/hive.dart'; //저장을 위한 hive 패키지.
 
-void main() {
+void main() async {
   runApp(MyApp());
 }
 

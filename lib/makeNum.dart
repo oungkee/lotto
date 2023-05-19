@@ -132,27 +132,41 @@ class _makeNumState extends State<makeNum> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText:
-                            // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
-                            '아무 문자나 입력 하십시오. \n Please input the any characters.'),
-                    controller: _inputChar,
-                    keyboardType: TextInputType.text,
-                    //텍스트 변경 시 아래의 메서드를 실행.
-                    onChanged: (text) {
-                      super.setState(() {
-                        // 공백은 삭제한다.
-                        tempChar = _inputChar.text.replaceAll(' ', '');
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText:
+                                  // 차후 텍스트 입력 상자에서 줄바꿈이 가능한지 확인할 것 (현재는 줄바꿈 적용이 안됨)
+                                  '아무 문자나 입력 하십시오. \n Please input the any characters.'),
+                          controller: _inputChar,
+                          keyboardType: TextInputType.text,
+                          //텍스트 변경 시 아래의 메서드를 실행.
+                          onChanged: (text) {
+                            super.setState(() {
+                              // 공백은 삭제한다.
+                              tempChar = _inputChar.text.replaceAll(' ', '');
 
-                        // 텍스트 입력 상자에 문자가 입력된 경우에만
-                        if (tempChar != '') {
-                          // 입력받은 문자를 공식에 의해 임의숫자로 변환한다.
-                          _calAscii();
-                        }
-                      });
-                    },
+                              // 텍스트 입력 상자에 문자가 입력된 경우에만
+                              if (tempChar != '') {
+                                // 입력받은 문자를 공식에 의해 임의숫자로 변환한다.
+                                _calAscii();
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                      wgseo_Sized_Width(),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "저장",
+                          style: TextStyle(height: 3.7),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
@@ -171,10 +185,6 @@ class _makeNumState extends State<makeNum> {
                   ),
                   wgseo_Sized_Heigh(),
                   //저장버튼 (이후 로컬에 데이터 저장할 수 있도록 추가 할것)
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("저장"),
-                  ),
                 ],
               ),
             ),

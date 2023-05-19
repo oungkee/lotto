@@ -33,7 +33,7 @@ class _informNumState extends State<informNum> {
       children: <Widget>[
         const Text(
           'Lotto Result numbers',
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
         ),
         wgseo_Sized_Heigh(),
         // data Map 에 등록된 값을 Text 값으로 표시하고, showFormatNum 함수를 통하여 천단위 , 를 표시한다.
