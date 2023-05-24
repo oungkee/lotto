@@ -36,11 +36,12 @@ dependencies:
   shared_preferences: ^2.0.15   #내부 저장소 관리를 위한 라이브러리
   flutter_easyloading: ^3.0.5        #toast 및 로딩 이미지를 사용하기 위한 라이브러리
   http: ^0.13.5         #로또 번호를 파싱하기위한 라이브러리.
-  html: ^0.15.1         #웹 페이지 크롤링을 위한 라이브러리
+  #html: ^0.15.1         #웹 페이지 크롤링을 위한 라이브러리
   intl: ^0.18.1         #숫자 포맷 (##,##) 을 사용하기 위한 라이브러리.
   lottie: ^2.3.2        #애니메이션 인트로를 위한 라이브러리.
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
+  #hive: ^2.2.3           #모든 플랫폼을 지원하는 NOSQL 데이터 베이스.provider (SQLITE는 웹지원 안함)
+  #hive_flutter: ^1.1.0   #프로그램이 모두 동일한 결과값을 유지해야 하므로 FireBase 로 관리하기로 함.
+  firebase_core: ^2.13.0    #파이어 베이스 cli(플랫폼 통합) 를 사용하기 위한 라이브러리 추가.
 
 dev_dependencies:
   flutter_test:
@@ -51,10 +52,13 @@ dev_dependencies:
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  # rules and activating additional ones.fir
   flutter_lints: ^2.0.0
 
-# For information on the generic Dart part of this file, see the
+# For information on the generi
+
+
+#  c Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
