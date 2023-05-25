@@ -42,6 +42,7 @@ dependencies:
   #hive: ^2.2.3           #모든 플랫폼을 지원하는 NOSQL 데이터 베이스.provider (SQLITE는 웹지원 안함)
   #hive_flutter: ^1.1.0   #프로그램이 모두 동일한 결과값을 유지해야 하므로 FireBase 로 관리하기로 함.
   firebase_core: ^2.13.0    #파이어 베이스 cli(플랫폼 통합) 를 사용하기 위한 라이브러리 추가.
+  cloud_firestore: ^4.7.1   #cloud Firebase 를 사용하기위한 라이브러리 추가.
 
 dev_dependencies:
   flutter_test:

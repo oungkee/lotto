@@ -8,9 +8,15 @@ import 'makeNum.dart'; // 번호 생성
 // import 'test.dart'; //테스트
 import 'history.dart'; //이력
 import 'rank.dart'; //랭크
-import 'package:hive/hive.dart'; //저장을 위한 hive 패키지.
+// import 'package:hive/hive.dart'; //저장을 위한 hive 패키지.
+import 'package:firebase_core/firebase_core.dart'; //firebase 사용을 위한 패키지.
+import 'firebase_options.dart'; //파일의 구성으로 firebase_core 패키지에서 Firebase.initializeApp을 호출한다.
 
 void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ); //Firebase 초기화
   runApp(MyApp());
 }
 
