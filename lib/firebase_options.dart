@@ -21,10 +21,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -52,6 +49,15 @@ class DefaultFirebaseOptions {
     messagingSenderId: '459623171333',
     projectId: 'test-todo-6056e',
     authDomain: 'test-todo-6056e.firebaseapp.com',
+    databaseURL: 'https://test-todo-6056e-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'test-todo-6056e.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAFinqP0FOK0Ad-ERwdQbUYBSK2mAhlqps',
+    appId: '1:459623171333:android:08f44ecf7839e92a75236c',
+    messagingSenderId: '459623171333',
+    projectId: 'test-todo-6056e',
     databaseURL: 'https://test-todo-6056e-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'test-todo-6056e.appspot.com',
   );

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "459623171333",
+    "firebase_url": "https://test-todo-6056e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "test-todo-6056e",
+    "storage_bucket": "test-todo-6056e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459623171333:android:08f44ecf7839e92a75236c",
+        "android_client_info": {
+          "package_name": "com.example.lotto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459623171333-s2bs0v0qv6jr07r5c4damsj70k4kvm7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFinqP0FOK0Ad-ERwdQbUYBSK2mAhlqps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459623171333-s2bs0v0qv6jr07r5c4damsj70k4kvm7l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "459623171333-ao9on7d7ftlg8p1k5pugvck3uefjng5m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lotto"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

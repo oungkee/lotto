@@ -23,6 +23,9 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -48,8 +51,8 @@ android {
         applicationId "com.example.lotto"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        //minSdkVersion flutter.minSdkVersion
-        //targetSdkVersion flutter.targetSdkVersion
+//        minSdkVersion flutter.minSdkVersion
+//        targetSdkVersion flutter.targetSdkVersion
         //Firebase 사용하기 위해서는 SDK 19 이상이어야 한다. (21로 해야 firebase 제한을 해제할 수 있다) ,targetSdkVersion은 30
         minSdkVersion 21
         targetSdkVersion 30

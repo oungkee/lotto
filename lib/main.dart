@@ -13,7 +13,7 @@ import 'package:firebase_core/firebase_core.dart'; //firebase 사용을 위한 �
 import 'firebase_options.dart'; //파일의 구성으로 firebase_core 패키지에서 Firebase.initializeApp을 호출한다.
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); //Firebase 초기화
