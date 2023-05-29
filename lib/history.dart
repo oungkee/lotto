@@ -100,6 +100,7 @@ class _historyState extends State<history> {
   //할일 객체를 ListTile 형태로 변경하는 메서드(함수) (Todo todo) 와 같이 클래스를 상속받아 사용할 수 있다.
   //Firestore 문서는 DocumentSnapshot 클래스의 인스턴스이며, 이를 받아 Todo 객체를 생성하는 코드
   Widget _buildItemWidget(DocumentSnapshot doc) {
+    // final atodo = aTodo(doc['title'], isDone: doc['isDone']);
     final todo = Todo(doc['title'], isDone: doc['isDone']);
     return ListTile(
         //클릭 시 완료/취소되도록 수정.

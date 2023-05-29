@@ -1,14 +1,7 @@
-// import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; //정수만 입력 받기 위해 사용될 패키지.inputFormatters
 import 'wgseo_module.dart';
-// 내부 저장소를 사용하기 위한 외부 패키지.
-import 'package:shared_preferences/shared_preferences.dart';
-
-// Shared Preferences 내부 저장소에 map 형식 데이터를 저장하기 위해 사용하는 패키지.
-// import 'dart:convert';
-
 // toast 및 로딩 사용을 위한 패키지. (Main에 Import 해도 실제 사용 폼에서도 import 해야 한다.)
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -45,44 +38,29 @@ class _manageNumState extends State<manageNum> {
   FocusNode? _focus6;
   FocusNode? _focusRemark;
 
-  // 내부 저장소에 저장할 변수.
-  String _saveData = '';
+  void _addNumber(LottoNo lottoNo) {
+    // String tempNo = '';
+    // tempNo = '$_num1,$_num2,$_num3,$_num4,$_num5,$_num6';
 
-  // 내부 저장소에 등록된 Key값의 가짓수.
-  int _keyCount = 0;
-
-  void _setData(int keyCount, String value) async {
-    // 저장소에 저장될 key 값.
-    var key = keyCount.toString();
-    // pref 변수에 인스턴스를 호출한다.
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    // 키, 값 으로 데이터를 저장한다.
-    pref.setString(key, value);
-    print(pref.getKeys().length);
-  }
-
-  void _loadData(String tempKey) async {
-    // var key = 'data';
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    _keyCount = pref.getKeys().length;
-    setState(() {
-      var value = pref.getString(tempKey);
-      if (value == null) {
-        _saveData = '';
-      } else {
-        _saveData = value;
-      }
+    // 새로운 문서를 lottoNo 컬렉션에 Map 형식 데이터로 저장한다.
+    FirebaseFirestore.instance.collection('lottoNo').add({
+      'lottoDesc': lottoNo.lottoDesc,
+      'lottoNums': lottoNo.lottoNums,
+      'lottoType': lottoNo.lottoType
     });
+    // 입력상자 초기화.
+    _num1.text = '';
+    _num2.text = '';
+    _num3.text = '';
+    _num4.text = '';
+    _num5.text = '';
+    _num6.text = '';
+    _remarks.text = '';
   }
 
-  // void _delData(String value) async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   // key 가 전달받은 인자 key 의 값 삭제
-  //   _saveData = '';
-  //
-  //   // 모든 데이터 삭제
-  //   // pref.clear();
-  // }
+  void _delNumber(DocumentSnapshot doc) {
+    FirebaseFirestore.instance.collection('lottoNo').doc(doc.id).delete();
+  }
 
   @override
   void initState() {
@@ -96,7 +74,7 @@ class _manageNumState extends State<manageNum> {
     _focus6 = FocusNode();
     _focusRemark = FocusNode();
 
-    _loadData('1');
+    // _loadData('1');
   }
 
   @override
@@ -137,34 +115,31 @@ class _manageNumState extends State<manageNum> {
         // wgseo_Sized_Heigh(),
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Form(
-            // 글로벌 key 를 입력 상자에 지정한다, key는 텍스트 필드 상위에 선언해 준다.
-            key: _formKeyRemark,
-            child: TextFormField(
-              // 폼이 시작되면 자동으로 포커스를 가진다.
-              autofocus: true,
-              controller: _remarks,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: '내용을 입력하세요.',
+          child: Expanded(
+            child: Form(
+              // 글로벌 key 를 입력 상자에 지정한다, key는 텍스트 필드 상위에 선언해 준다.
+              key: _formKeyRemark,
+              child: TextFormField(
+                // 폼이 시작되면 자동으로 포커스를 가진다.
+                autofocus: true,
+                controller: _remarks,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '내용을 입력하세요.',
+                ),
+                //============================
+                onChanged: (text) {
+                  super.setState(() {});
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '내용은 필수 입력 사항입니다!';
+                  }
+                  return null;
+                },
+                //============================
               ),
-              //============================
-              onChanged: (text) {
-                super.setState(() {
-                  // 공백은 삭제한다.
-                  // _counter = _remarks.text;
-                  // _saveData = _remarks.text;
-                  // _setData(_saveData);
-                });
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '내용은 필수 입력 사항입니다!';
-                }
-                return null;
-              },
-              //============================
             ),
           ),
         ),
@@ -195,6 +170,11 @@ class _manageNumState extends State<manageNum> {
                     if (_formKey4.currentState!.validate()) {
                       if (_formKey5.currentState!.validate()) {
                         if (_formKey6.currentState!.validate()) {
+                          String tempNums =
+                              '${_num1.text},${_num2.text},${_num3.text},${_num4.text},${_num5.text},${_num6.text}';
+
+                          _addNumber(LottoNo(_remarks.text, tempNums.toString(),
+                              '번호관리', 'wgseo'));
                         } else {
                           FocusScope.of(context).requestFocus(_focus6);
                         }
@@ -217,13 +197,6 @@ class _manageNumState extends State<manageNum> {
               //오류 발생 시 포커스를 입력 상자로 이동한다.
               FocusScope.of(context).requestFocus(_focusRemark);
             }
-            // EasyLoading.showToast('초과 됨');
-            setState(() {
-              _save_Data();
-              // 동일한 숫자가 있는지 검증한다?
-              // _checkSameNum
-              // _delData('data');
-            });
           },
           child: const Text('SAVE'),
         ),
@@ -231,19 +204,46 @@ class _manageNumState extends State<manageNum> {
     );
   }
 
-  _buildMiddle() {
-    return Expanded(
-      //!!!!중요 Column 내부에 List View를 작성하는 경우 Expanded 위젯으로 감싸야 한다.
-      child: ListView(
-        // shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
-        children: [
-          Text('저장된 숫자는 $_saveData 입니다.'),
-        ],
+  Widget _buildMiddle() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('lottoNo').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
+          final documents = snapshot.data?.docs;
+          return Expanded(
+            //!!!!중요 Column 내부에 List View를 작성하는 경우 Expanded 위젯으로 감싸야 한다.
+            child: ListView(
+              // shrinkWrap: true, // 이 리스트가 다른 스크롤 객체 안에 있다면 true로 설정해야 함
+              // children: [documents.map((doc))],
+              children: documents!.map((doc) => _buildItemWidget(doc)).toList(),
+              // children: documents!.map((doc) => _buildItemWidget(doc)).toList(),
+              // documents!.map((doc) => _buildItemWidget(doc)).toList(),
+            ),
+          );
+        });
+  }
+
+  Widget _buildItemWidget(DocumentSnapshot doc) {
+    final lotto =
+        LottoNo(doc['lottoDesc'], doc['lottoNums'], doc['lottoType'], 'wgseo');
+    return ListTile(
+      onTap: () {},
+      title: Text(
+        lotto.lottoDesc,
+      ),
+      subtitle: Text('${lotto.lottoNums} (${lotto.lottoType})'),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete_forever),
+        onPressed: () {
+          _delNumber(doc);
+        },
       ),
     );
   }
 
-  _initTextFormField(var number, var tempKey, var tempFocus) {
+  Widget _initTextFormField(var number, var tempKey, var tempFocus) {
     return Flexible(
       child: Form(
         // 글로벌 key 를 입력 상자에 지정한다, key는 텍스트 필드 상위에 선언해 준다.
@@ -298,13 +298,19 @@ class _manageNumState extends State<manageNum> {
       ),
     );
   }
+}
 
-  _save_Data() {
-    // 등록된 데이터를 저장한다.32
-    _saveData = _remarks.text;
-    _keyCount = _keyCount + 1;
-    _setData(_keyCount, _saveData);
-  }
+// firebase 에서 테이블 구조를 사전에 정의할 필요없이 class 에서 정의한 후 업로드 한다.
+class LottoNo {
+  String lottoDesc = '';
+  String lottoNums = '';
+  String lottoType = '';
+  String lottoUser = '';
 
-  // _show_Data() {}
+  LottoNo(
+    this.lottoDesc,
+    this.lottoNums,
+    this.lottoType,
+    this.lottoUser,
+  );
 }
