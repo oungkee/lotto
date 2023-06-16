@@ -55,7 +55,7 @@ android {
 //        targetSdkVersion flutter.targetSdkVersion
         //Firebase 사용하기 위해서는 SDK 19 이상이어야 한다. (21로 해야 firebase 제한을 해제할 수 있다) ,targetSdkVersion은 30
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

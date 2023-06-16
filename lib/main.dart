@@ -11,6 +11,7 @@ import 'rank.dart'; //랭크
 // import 'package:hive/hive.dart'; //저장을 위한 hive 패키지.
 import 'package:firebase_core/firebase_core.dart'; //firebase 사용을 위한 패키지.
 import 'firebase_options.dart'; //파일의 구성으로 firebase_core 패키지에서 Firebase.initializeApp을 호출한다.
+import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
       },
       //=== EasyLoding 패키지를 사용하기 위해서는 Material App에서 전처리를 해줘야 한다.=======
       home: IntroPage(),
+      // home: LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }

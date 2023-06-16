@@ -46,7 +46,8 @@ class _manageNumState extends State<manageNum> {
     FirebaseFirestore.instance.collection('lottoNo').add({
       'lottoDesc': lottoNo.lottoDesc,
       'lottoNums': lottoNo.lottoNums,
-      'lottoType': lottoNo.lottoType
+      'lottoType': lottoNo.lottoType,
+      'timeStamp': Timestamp.now(),
     });
     // 입력상자 초기화.
     _num1.text = '';
@@ -206,7 +207,12 @@ class _manageNumState extends State<manageNum> {
 
   Widget _buildMiddle() {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('lottoNo').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('lottoNo')
+            .orderBy('timeStamp',
+                descending:
+                    true) //정렬을위해 orderby 추가. 입력날짜의 정렬을 내림차순(가장 최근이 먼저)으로 지정하는 경우 descending 추가.try
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
