@@ -19,7 +19,7 @@ class _informNumState extends State<informNum> {
 
   @override
   void initState() {
-    // 최초 시작될 때 실행.
+    // 최초 시작될 때 실행.aa
     super.initState();
     // 1. 현 회차를 불러온다.
     fetchNowGameNo();
@@ -43,7 +43,7 @@ class _informNumState extends State<informNum> {
         Text('당첨번호는 ${data['drwtNo1'].toString()}, '
             '${data['drwtNo2'].toString()}, '
             '${data['drwtNo3'].toString()}, '
-            '${data['drwtNo4'].toString()}, '
+            '${data['drwtNo4'].toString()} , '
             '${data['drwtNo5'].toString()}, '
             '${data['drwtNo6'].toString()} + '
             '${data['bnusNo'].toString()}(보너스) 입니다.'),
